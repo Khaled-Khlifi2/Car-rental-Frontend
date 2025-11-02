@@ -1,6 +1,9 @@
 import React from 'react'
 import { dummyUserData, ownerMenuLinks } from '../../assets/assets'
 import { NavLink, useLocation } from 'react-router-dom';
+import { assets } from '../../assets/assets';
+import { useState } from 'react';
+
 
 const Sidebar = () => {
 
@@ -22,7 +25,8 @@ const Sidebar = () => {
             <label htmlFor='image' >
                 <img src={image ? URL.createObjectURL(image) 
                     : user?.image 
-                    || "https://images.unsplash.com/photo/1633332755192-727a05c4013?q=80&w=300"} alt="" />
+                    || "https://images.unsplash.com/photo/1633332755192-727a05c4013?q=80&w=300"} alt=""
+                        className='h-9 md:h-14 w-9 md:w-14 rounded-full mx-auto' />
                 <input type="file" id='image' accept="image/*" hidden onChange={e => setImage(e.target.files[0])} />
                     
                 <div className='absolute hidden top-0 right-0 left-0 bottom-0 bg-black/10 rounded-full 
@@ -38,11 +42,11 @@ const Sidebar = () => {
 
         <p className='mt-2 text-base max-md:hidden'>{user?.name}</p>
         <div className='w-full'>
-            {ownerMenuLinks.map(() =>(
+            {ownerMenuLinks.map((link, index) =>(
                 <NavLink key={index} to={link.path} className={`relative flex items-center gap-2 w-full py-3 pl-4 first:mt-6 ${link.path === location.pathname ? 'bg-primary/10 text-primary' : 'text-gray-600'}`}>
                     <img src={link.path === location.pathname ? link.colorIcon : link.icon} alt="car icon" />
                     <span className='max-md:hidden'>{link.name}</span>
-                    <div className={`${link.path === location.pathname && 'bg-primary'} w-1.5 h-8 rounded-1 right-0 absolute`}></div>
+                    <div className={`${link.path === location.pathname && 'bg-primary'} w-1.5 h-8 rounded-l right-0 absolute`}></div>
                 </NavLink>
             ))}
         </div>
