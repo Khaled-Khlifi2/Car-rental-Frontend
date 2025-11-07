@@ -17,7 +17,7 @@ const HomeSection1 = () => {
             <div className="flex flex-col md:flex-row items-start md:items-center gap-10 min-md:ml-8">
                 <div className="flex flex-col items-start gap-2">
                     <select required value={pickupLocation} onChange={(e) => setPickupLocation(e.target.value)}>
-                        <option value="" selected>Pick-up Location</option>
+                        <option value="" >Pick-up Location</option>
                         {cityList.map((city) => <option key={city} value={city}>{city}</option>)}
                     </select>
                     <p className="px-1 text-sm text-gray-500">{pickupLocation 
