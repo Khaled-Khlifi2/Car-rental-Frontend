@@ -40,7 +40,6 @@ export const AppProvider = ({ children })=> {
     }
 
     // Function to fetch all cars from the server
-
     const fetchCars = async () =>{
         try {
             const {data} = await axios.get('/api/user/cars')
