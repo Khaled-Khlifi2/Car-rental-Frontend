@@ -1,17 +1,37 @@
 import { useEffect, useState } from "react";
-import { dummyMyBookingsData } from "../../assets/assets";
 import Title from "../../components/owner/Title";
+import { useAppContext } from "../../context/AppContext";
+import toast from "react-hot-toast";
 
 
 
 const ManageBookings = () => {
 
-  const currency = import.meta.env.VITE_CURRENCY;
+  const { currency, axios } = useAppContext()
 
   const [bookings, setBookings] = useState([]);
 
   const fetchOwnerBookings = async () => {
-    setBookings(dummyMyBookingsData)
+    try {
+      const { data } = await axios.get('/api/bookings/owner')
+      data.success ? setBookings(data.bookings) : toast.error(data.message)
+    } catch (error) {
+      toast.error(error.message)
+    }
+  }
+
+  const changeBookingStatus = async (bookingId, status) => {
+    try {
+      const { data } = await axios.post('/api/bookings/change-status', {bookingId, status})
+      if(data.success){
+        toast.success(data.message)
+        fetchOwnerBookings()
+      }else{
+        toast.error(data.message)
+      }
+    } catch (error) {
+      toast.error(error.message)
+    }
   }
 
   useEffect(() =>{
@@ -55,12 +75,13 @@ const ManageBookings = () => {
                 </td>
 
                 <td className="p-3 max-md:hidden">
-                  <span className="bg-gray-100 px-3 py-1 rounded-full text-xs">offmine</span>
+                  <span className="bg-gray-100 px-3 py-1 rounded-full text-xs">offline</span>
                 </td>
 
                 <td className="p-3">
                   {booking.status === 'pending' ? (
-                    <select value={booking.status} className="px-2 py-1.5 mt-1 text-gray-500 border
+                    <select onChange={e=> changeBookingStatus(booking._id,e.target.value)} value={booking.status} 
+                    className="px-2 py-1.5 mt-1 text-gray-500 border
                      border-borderColor rounded-md outline-none">
                       <option value="pending">Pending</option>
                       <option value="cancelled">Cancelled</option>
