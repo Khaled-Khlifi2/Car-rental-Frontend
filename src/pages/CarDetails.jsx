@@ -77,10 +77,15 @@ const CarDetails = () => {
                   {icon: assets.car_icon, text: car.transmission},
                   {icon: assets.location_icon, text: car.location}
                 ].map(({icon, text}) => (
-                  <div key={text} className='flex flex-col items-center bg-light p-4 rounded-lg' >
+                  <motion.div 
+                  initial={{ opacity: 0, y:10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4 }}
+
+                  key={text} className='flex flex-col items-center bg-light p-4 rounded-lg' >
                     <img src={icon} alt=""  className='h-5 mb-2' />
                     {text}
-                  </div>
+                  </motion.div>
                 ))}
               </div>
 
@@ -109,7 +114,12 @@ const CarDetails = () => {
           </motion.div>
 
         {/*Right: Booking Form */}
-        <form onSubmit={handelSubmit} className='shadow-lg h-max sticky top-18 rounded-xl p-6 space-y-6 text-gray-500'>
+        <motion.form 
+         initial={{ opacity: 0, y: 30 }}
+         animate={{ opacity: 1, y: 0 }}
+         transition={{delay: 0.6 , duration: 0.3 }}
+
+        onSubmit={handelSubmit} className='shadow-lg h-max sticky top-18 rounded-xl p-6 space-y-6 text-gray-500'>
           <p className='flex items-center justify-between text-2xl 
           text-gray-800 font-semibold'>{currency}{car.pricePerDay}<span className='text-base 
           text-gray-400 font-normal'> per day</span></p>
@@ -136,7 +146,7 @@ const CarDetails = () => {
           </button>
 
           <p className='text-center text-sm'>No credit card required to reserve</p>
-        </form>
+        </motion.form>
 
       </div>
     </div>
